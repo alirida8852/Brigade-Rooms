@@ -242,7 +242,7 @@
             color: var(--text-secondary);
         }
         
-        /* NEW STYLES for "Why Choose Us" Flip Cards */
+        /* --- Why Choose Us Flip Cards --- */
         .why-us-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -253,6 +253,7 @@
             background-color: transparent;
             height: 350px;
             perspective: 1000px;
+            cursor: pointer;
         }
 
         .flip-card-inner {
@@ -266,7 +267,8 @@
             border-radius: 20px;
         }
 
-        .flip-card-container:hover .flip-card-inner {
+        .flip-card-container:hover .flip-card-inner,
+        .flip-card-container.is-flipped .flip-card-inner {
             transform: rotateY(180deg);
         }
 
@@ -421,8 +423,11 @@
             gap: 20px;
         }
 
+        /* --- NEW General Facilities Hover Effect --- */
         .facility-item {
-            background: var(--white);
+            background: linear-gradient(to top, var(--primary-dark) 50%, var(--white) 50%);
+            background-size: 100% 200%;
+            background-position: top;
             padding: 18px 20px;
             border-radius: 12px;
             font-weight: 500;
@@ -430,19 +435,25 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            transition: all 0.3s ease;
+            transition: background-position 0.4s ease, color 0.4s ease;
             border: 1px solid #e5e7eb;
+            position: relative;
+            z-index: 1;
         }
         
         .facility-item:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow);
+            color: var(--white);
+            background-position: bottom;
             border-color: var(--primary-dark);
-            color: var(--primary-dark);
         }
 
         .facility-item span:first-child {
             font-size: 1.6rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .facility-item:hover span:first-child {
+            transform: scale(1.1);
         }
 
         .food-features {
@@ -1258,6 +1269,15 @@
                 tabContents.forEach(content => content.classList.remove('active'));
                 tab.classList.add('active');
                 document.getElementById(tab.dataset.tab).classList.add('active');
+            });
+        });
+
+        // --- NEW SCRIPT FOR FLIP CARDS ON MOBILE ---
+        const flipCards = document.querySelectorAll('.flip-card-container');
+        flipCards.forEach(card => {
+            card.addEventListener('click', function() {
+                // This toggles the 'is-flipped' class on and off with each click
+                card.classList.toggle('is-flipped');
             });
         });
 
