@@ -50,7 +50,6 @@
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
         
-        /* --- NEW CSS FOR HIDING HEADER --- */
         header.hidden {
             transform: translateY(-100%);
         }
@@ -126,25 +125,31 @@
             text-align: center;
         }
 
+        /* --- UPDATED RIGHT SECTION STYLES --- */
         .right-section {
-            flex: 1;
+            flex: 1.2; /* Give slightly more space to images */
             background: var(--primary);
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            padding: 2rem;
+            padding: 2.5rem;
+            gap: 1.5rem;
         }
         
         .right-section img {
-            max-width: 100%;
-            max-height: 80vh;
-            width: auto;
-            height: auto;
-            object-fit: contain;
+            width: 50%;
+            height: 80vh;
+            object-fit: cover;
             display: block;
             border-radius: 20px;
             box-shadow: var(--shadow-lg);
+            transition: transform 0.4s ease, filter 0.4s ease;
+        }
+
+        .right-section img:hover {
+            transform: scale(1.03);
+            filter: brightness(1.1);
         }
 
         .left-section h1 {
@@ -247,7 +252,6 @@
             color: var(--text-secondary);
         }
         
-        /* --- Why Choose Us Flip Cards --- */
         .why-us-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -323,7 +327,6 @@
             color: var(--text-light);
         }
 
-        /* Room Type Styles */
         .room-types {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -428,7 +431,6 @@
             gap: 20px;
         }
 
-        /* --- NEW General Facilities Hover Effect --- */
         .facility-item {
             background: linear-gradient(to top, var(--primary-dark) 50%, var(--white) 50%);
             background-size: 100% 200%;
@@ -599,16 +601,16 @@
         }
 
         .gallery-item:hover img {
-            transform: scale(1.05);
+            transform: scale(1.1);
         }
 
         .gallery-overlay {
             position: absolute;
-            top: 0;
+            bottom: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to top, rgba(10, 10, 60, 0.8) 0%, rgba(10, 10, 60, 0) 80%);
+            background: linear-gradient(to top, rgba(10, 10, 60, 0.9) 0%, rgba(10, 10, 60, 0) 80%);
             color: var(--white);
             display: flex;
             flex-direction: column;
@@ -616,11 +618,26 @@
             align-items: flex-start;
             padding: 25px;
             opacity: 0;
-            transition: opacity 0.4s ease;
+            transform: translateY(30px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
         }
         
         .gallery-item:hover .gallery-overlay {
             opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .gallery-overlay h4,
+        .gallery-overlay span {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.4s ease 0.2s, transform 0.4s ease 0.2s;
+        }
+        
+        .gallery-item:hover .gallery-overlay h4,
+        .gallery-item:hover .gallery-overlay span {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         .gallery-overlay h4 {
@@ -632,6 +649,7 @@
         .gallery-overlay span {
             font-size: 2rem;
             margin-top: 10px;
+            transition-delay: 0.3s;
         }
 
         .gallery-item:nth-child(1) {
@@ -855,9 +873,19 @@
             .header-container { flex-direction: column; gap: 15px; padding: 15px 20px; }
             nav { gap: 15px 20px; }
             .container { flex-direction: column; height: auto; padding-top: 180px; }
-            .left-section, .right-section { flex: unset; width: 100%; }
+            .left-section, .right-section { flex: unset; width: 100%; flex: 1; }
             .left-section { padding: 40px 20px; padding-top: 2rem; min-height: auto; }
-            .right-section { padding: 2rem 1rem; }
+            
+            /* --- UPDATED MOBILE STYLES FOR RIGHT SECTION --- */
+            .right-section { 
+                padding: 2rem 1rem; 
+                flex-direction: column; /* Stack images */
+            }
+            .right-section img {
+                width: 100%;
+                height: 300px; /* Adjust height for mobile */
+            }
+
             .left-section h1 { font-size: 2.2rem; }
             .subtitle { font-size: 1.1rem; }
             .cta-button { font-size: 1rem; padding: 14px 30px; }
@@ -884,7 +912,7 @@
             </h1>
             <nav>
                 <a href="#about">About</a>
-                <a href="#why-us">Why Us</a> <!-- New Link -->
+                <a href="#why-us">Why Us</a>
                 <a href="#rooms">Rooms</a>
                 <a href="#facilities">Facilities</a>
                 <a href="#food">Food</a>
@@ -917,8 +945,10 @@
             </div>
         </div>
 
+        <!-- UPDATED RIGHT SECTION WITH TWO IMAGES -->
         <div class="right-section">
-            <img src='building.png' />
+            <img src='building.png' alt="PG Building Exterior"/>
+            <img src='building2.png' alt="Modern Room Interior" />
         </div>
     </div>
 
@@ -938,7 +968,6 @@
         </div>
     </section>
     
-    <!-- NEW "Why Choose Us" SECTION with FLIP CARDS -->
     <section id="why-us" class="animate-on-scroll">
         <h3>Why Choose Us?</h3>
         <div class="why-us-grid">
@@ -985,19 +1014,35 @@
         <h3>Room Types</h3>
         <div class="room-types">
             <div class="room-card">
-                <img src="single.png" alt="Single Sharing Room">
+                <img src="single.png" alt="Premium Single Sharing Room">
                 <div class="room-card-content">
-                    <h4><span style="color: var(--white);">Single Sharing</span></h4>
+                    <h4><span style="color: var(--white);">Premium Single</span></h4>
                     <span class="price">₹9,000/month</span>
                     <p>Includes AC, Wi-Fi, Meals & More.</p>
                 </div>
             </div>
             <div class="room-card">
-                <img src="double.png" alt="Double Sharing Room">
+                <img src="single.png" alt="Standard Single Sharing Room">
                 <div class="room-card-content">
-                    <h4><span style="color: var(--white);">Double Sharing</span></h4>
+                    <h4><span style="color: var(--white);">Standard Single</span></h4>
+                    <span class="price">₹8,000/month</span>
+                    <p>Includes Fan, Wi-Fi, Meals & More.</p>
+                </div>
+            </div>
+            <div class="room-card">
+                <img src="double.png" alt="Premium Double Sharing Room">
+                <div class="room-card-content">
+                    <h4><span style="color: var(--white);">Premium Double</span></h4>
                     <span class="price">₹7,000/month</span>
                     <p>Includes AC, Wi-Fi, Meals & More.</p>
+                </div>
+            </div>
+            <div class="room-card">
+                <img src="double.png" alt="Standard Double Sharing Room">
+                <div class="room-card-content">
+                    <h4><span style="color: var(--white);">Standard Double</span></h4>
+                    <span class="price">₹6,500/month</span>
+                    <p>Includes Fan, Wi-Fi, Meals & More.</p>
                 </div>
             </div>
             <div class="room-card">
@@ -1115,8 +1160,10 @@
                     <input type="tel" id="phone" placeholder="Phone Number" required pattern="[6-9]{1}[0-9]{9}">
                     <select id="room" required>
                         <option value="">Select Room Type</option>
-                        <option value="Single Sharing">Single Sharing</option>
-                        <option value="Double Sharing">Double Sharing</option>
+                        <option value="Premium Single Sharing">Premium Single Sharing</option>
+                        <option value="Standard Single Sharing">Standard Single Sharing</option>
+                        <option value="Premium Double Sharing">Premium Double Sharing</option>
+                        <option value="Standard Double Sharing">Standard Double Sharing</option>
                         <option value="Triple Sharing">Triple Sharing</option>
                     </select>
                     <button type="submit">Submit Inquiry</button>
@@ -1142,11 +1189,9 @@
         <p>&copy; 2025 Cozy Home PG. All rights reserved. Made with ❤️ for our residents.</p>
     </footer>
 
-    <!-- SCROLL TO TOP BUTTON -->
     <button id="scrollTopBtn" title="Go to top">↑</button>
 
     <script>
-        // --- Intersection Observer for scroll animations ---
         const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -1158,22 +1203,17 @@
         }, observerOptions);
         document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 
-        // --- UPDATED Header scroll effect ---
         let lastScrollY = window.scrollY;
         const header = document.querySelector('header');
         const scrollTopBtn = document.getElementById("scrollTopBtn");
         
         window.onscroll = function() {
             const currentScrollY = window.scrollY;
-
-            // Show/hide scroll to top button
             if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
                 scrollTopBtn.style.display = "block";
             } else {
                 scrollTopBtn.style.display = "none";
             }
-            
-            // Header background/shadow effect on scroll
             if (currentScrollY > 50) {
                 header.style.background = 'rgba(255, 255, 255, 0.98)';
                 header.style.boxShadow = '0 4px 20px rgba(0,0,0,0.07)';
@@ -1181,25 +1221,18 @@
                 header.style.background = 'rgba(255, 255, 255, 0.95)';
                 header.style.boxShadow = 'none';
             }
-
-            // Hide header on scroll down, show on scroll up
             if (lastScrollY < currentScrollY && currentScrollY > header.offsetHeight) {
-                // Scrolling down
                 header.classList.add('hidden');
             } else {
-                // Scrolling up
                 header.classList.remove('hidden');
             }
-            
             lastScrollY = currentScrollY <= 0 ? 0 : currentScrollY;
         };
 
-        // Scroll to top button functionality
         scrollTopBtn.addEventListener("click", () => {
             window.scrollTo({top: 0, behavior: 'smooth'});
         });
         
-        // --- Form Submission to WhatsApp ---
         const contactForm = document.getElementById('contactForm');
         contactForm.addEventListener('submit', function(event) {
             event.preventDefault();
@@ -1215,11 +1248,10 @@
             contactForm.reset();
         });
 
-        // --- Gallery Modal Script ---
         const galleryItems = document.querySelectorAll('.gallery-item');
         const roomGalleries = [
             { name: "Single Sharing Room", images: ['single.png', 'single-2.png', 'single-3.png'] },
-            { name: "Double Sharing Room", images: ['double.png', 'double-2.png'] },
+            { name: "Double Sharing Room", images: ['double.png', 'double-2.png', 'double-3.png'] },
             { name: "Triple Sharing Room", images: ['Triple.png', 'triple-2.png', 'triple-3.png'] }
         ];
         galleryItems.forEach((item, index) => {
@@ -1276,7 +1308,6 @@
             modal.addEventListener('DOMNodeRemoved', () => document.removeEventListener('keydown', keyHandler));
         }
         
-        // --- SCRIPT FOR TABS ---
         const tabs = document.querySelectorAll('.tab-btn');
         const tabContents = document.querySelectorAll('.tab-content');
         tabs.forEach(tab => {
@@ -1288,11 +1319,9 @@
             });
         });
 
-        // --- NEW SCRIPT FOR FLIP CARDS ON MOBILE ---
         const flipCards = document.querySelectorAll('.flip-card-container');
         flipCards.forEach(card => {
             card.addEventListener('click', function() {
-                // This toggles the 'is-flipped' class on and off with each click
                 card.classList.toggle('is-flipped');
             });
         });
