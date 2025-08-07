@@ -49,6 +49,11 @@
             transition: all 0.3s ease;
             border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
+        
+        /* --- NEW CSS FOR HIDING HEADER --- */
+        header.hidden {
+            transform: translateY(-100%);
+        }
 
         .header-container {
             max-width: 1200px;
@@ -1153,12 +1158,14 @@
         }, observerOptions);
         document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
 
-        // --- Header scroll effect ---
+        // --- UPDATED Header scroll effect ---
         let lastScrollY = window.scrollY;
         const header = document.querySelector('header');
         const scrollTopBtn = document.getElementById("scrollTopBtn");
         
         window.onscroll = function() {
+            const currentScrollY = window.scrollY;
+
             // Show/hide scroll to top button
             if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
                 scrollTopBtn.style.display = "block";
@@ -1166,8 +1173,7 @@
                 scrollTopBtn.style.display = "none";
             }
             
-            // Header scroll effect
-            const currentScrollY = window.scrollY;
+            // Header background/shadow effect on scroll
             if (currentScrollY > 50) {
                 header.style.background = 'rgba(255, 255, 255, 0.98)';
                 header.style.boxShadow = '0 4px 20px rgba(0,0,0,0.07)';
@@ -1175,6 +1181,16 @@
                 header.style.background = 'rgba(255, 255, 255, 0.95)';
                 header.style.boxShadow = 'none';
             }
+
+            // Hide header on scroll down, show on scroll up
+            if (lastScrollY < currentScrollY && currentScrollY > header.offsetHeight) {
+                // Scrolling down
+                header.classList.add('hidden');
+            } else {
+                // Scrolling up
+                header.classList.remove('hidden');
+            }
+            
             lastScrollY = currentScrollY <= 0 ? 0 : currentScrollY;
         };
 
@@ -1286,4 +1302,3 @@
 </body>
 
 </html>
-
