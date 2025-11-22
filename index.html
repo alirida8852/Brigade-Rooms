@@ -70,6 +70,7 @@
     { "@type": "LocationFeatureSpecification", "name": "Furnished Rooms", "value": true }
   ]
 }
+
 </script>
 
 
@@ -972,6 +973,80 @@
 </head>
 
 <body>
+    <!-- SPA Router for clean URLs + auto meta update -->
+<script>
+(function() {
+  // Define routes → section IDs + SEO titles + descriptions
+  const routeMap = {
+    '/': { id: '', title: 'AR Brigade Rooms | Best PG in Ashok Nagar, Bengaluru', desc: 'Affordable PG rooms in Ashok Nagar, Bengaluru. WiFi, food and 24/7 security. Book now.' },
+    '/about': { id: 'about', title: 'About · AR Brigade Rooms', desc: 'About AR Brigade Rooms — affordable PG and student hostel in Ashok Nagar, Bengaluru.' },
+    '/rooms': { id: 'rooms', title: 'Rooms · AR Brigade Rooms', desc: 'Single, double and dorm rooms available at AR Brigade Rooms in Ashok Nagar.' },
+    '/facilities': { id: 'facilities', title: 'Facilities · AR Brigade Rooms', desc: 'Facilities at AR Brigade Rooms including WiFi, food, security & laundry.' },
+    '/gallery': { id: 'gallery', title: 'Gallery · AR Brigade Rooms', desc: 'Photos of rooms, dorms and amenities at AR Brigade Rooms.' },
+    '/contact': { id: 'contact', title: 'Contact · AR Brigade Rooms', desc: 'Contact AR Brigade Rooms for bookings in Ashok Nagar, Bengaluru.' }
+  };
+
+  function updateSEO(title, desc) {
+    document.title = title;
+    let meta = document.querySelector('meta[name="description"]');
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.name = 'description';
+      document.head.appendChild(meta);
+    }
+    meta.content = desc;
+
+    let canon = document.querySelector('link[rel="canonical"]');
+    if (!canon) {
+      canon = document.createElement('link');
+      canon.rel = 'canonical';
+      document.head.appendChild(canon);
+    }
+    canon.href = window.location.origin + window.location.pathname;
+  }
+
+  function scrollToSection(id) {
+    if (!id) return;
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+      setTimeout(() => {
+        const section2 = document.getElementById(id);
+        if (section2) section2.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 300);
+    }
+  }
+
+  function handleRoute() {
+    const path = window.location.pathname.replace(/\/$/, '') || '/';
+    const route = routeMap[path] || routeMap['/'];
+
+    updateSEO(route.title, route.desc);
+    if (route.id) scrollToSection(route.id);
+  }
+
+  // Run route handler on page load
+  handleRoute();
+
+  // Handle browser back/forward
+  window.addEventListener('popstate', handleRoute);
+
+  // Intercept internal link clicks and use pushState navigation
+  document.addEventListener('click', function(e) {
+    const link = e.target.closest('a');
+    if (!link) return;
+    const href = link.getAttribute('href');
+    if (!href) return;
+    if (href.startsWith('/') && !href.startsWith('//')) {
+      e.preventDefault();
+      history.pushState({}, '', href);
+      handleRoute();
+    }
+  });
+})();
+</script>
+
     <header>
         <div class="header-container">
             <h1 style="display: flex; align-items: center; gap: 10px;">
