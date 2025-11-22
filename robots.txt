@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://arbrigaderooms.netlify.app/sitemap.xml
